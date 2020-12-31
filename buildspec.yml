@@ -1,0 +1,34 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo INSTALL PHASE BEGIN
+      - echo Entered the install phase ...
+      - echo `npm -v`
+      - echo NODE_ENV=$NODE_ENV
+      - npm install
+    finally:
+      - echo INSTALL PHASE END
+  pre_build:
+    commands:
+      - echo PREBUILD PHASE BEGIN
+      - echo Nothing to do in the pre_build phase ...
+    finally:
+      - echo PREBUILD PHASE END
+  build:
+    commands:
+      - echo BUILD PHASE BEGIN
+      - echo Entered the build phase ...
+      - echo Build started on `date`
+      - echo Build CODEBUILD_SOURCE_VERSION=$CODEBUILD_SOURCE_VERSION
+      - echo Build CODEBUILD_SRC_DIR=$CODEBUILD_SRC_DIR
+      - echo Build CODEBUILD_BUILD_NUMBER=$CODEBUILD_BUILD_NUMBER
+      - echo Build CODEBUILD_START_TIME=$CODEBUILD_START_TIME
+      - npm run build
+    finally:
+      - echo BUILD PHASE END
+artifacts:
+  files:
+    - '**/*'
+  base-directory: $CODEBUILD_SRC_DIR/dist/
+  discard-paths: no
